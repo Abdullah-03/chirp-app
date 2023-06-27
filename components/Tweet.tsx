@@ -1,15 +1,14 @@
 import { StyleSheet, Image } from "react-native";
-import {
-  MessageCircle,
-  Repeat2,
-  Heart,
-  Bookmark,
-  Share,
-} from "lucide-react-native";
+import { MessageCircle, Repeat2, Heart } from "lucide-react-native";
 
 import { Text, View } from "./Themed";
+import { TweetType } from "../types/index";
 
-export default function Tweet({ tweet }) {
+type TweetProps = {
+  tweet: TweetType;
+};
+
+export default function Tweet({ tweet }: TweetProps) {
   return (
     <View style={styles.container}>
       <View style={styles.profileImageContainer}>
@@ -22,13 +21,11 @@ export default function Tweet({ tweet }) {
           <Text style={styles.username}>@{tweet.user.username}</Text>
         </View>
         <Text style={styles.tweetText}>{tweet.content}</Text>
-        <Image source={{ uri: tweet.image }} style={styles.tweetImage} />
+        {/* <Image source={{ uri: tweet.image }} style={styles.tweetImage} /> */}
         <View style={styles.tweetInteractions}>
           <MessageCircle color="white" size={20} />
           <Repeat2 color="white" size={20} />
           <Heart color="white" size={20} />
-          <Bookmark color="white" size={20} />
-          <Share color="white" size={20} />
         </View>
       </View>
     </View>
@@ -46,6 +43,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 50,
     height: 50,
+    borderRadius: 50,
   },
   profileImageContainer: {
     paddingHorizontal: 10,
