@@ -18,7 +18,5 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    borderColor: "white",
-    borderWidth: 0.6,
   },
 });

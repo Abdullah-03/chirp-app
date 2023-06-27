@@ -21,7 +21,9 @@ export default function Tweet({ tweet }: TweetProps) {
           <Text style={styles.username}>@{tweet.user.username}</Text>
         </View>
         <Text style={styles.tweetText}>{tweet.content}</Text>
-        {/* <Image source={{ uri: tweet.image }} style={styles.tweetImage} /> */}
+        {tweet.image ? (
+          <Image source={{ uri: tweet.image }} style={styles.tweetImage} />
+        ) : null}
         <View style={styles.tweetInteractions}>
           <MessageCircle color="white" size={20} />
           <Repeat2 color="white" size={20} />
@@ -37,8 +39,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     paddingVertical: 20,
-    borderColor: "white",
-    borderWidth: 0.6,
   },
   profileImage: {
     width: 50,
@@ -63,12 +63,14 @@ const styles = StyleSheet.create({
   tweetInteractions: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   tweetText: {
     marginVertical: 10,
   },
   tweetImage: {
     width: "100%",
-    height: "60%",
+    aspectRatio: 16 / 9,
+    borderRadius: 20,
   },
 });
