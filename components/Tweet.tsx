@@ -7,12 +7,9 @@ import {
   Share,
 } from "lucide-react-native";
 
-import EditScreenInfo from "../../components/EditScreenInfo";
-import { Text, View } from "../../components/Themed";
-import tweets from "../../assets/tweets";
-let tweet = tweets[0];
+import { Text, View } from "./Themed";
 
-export default function TabOneScreen() {
+export default function Tweet({ tweet }) {
   return (
     <View style={styles.container}>
       <View style={styles.profileImageContainer}>
