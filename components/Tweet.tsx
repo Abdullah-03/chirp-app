@@ -1,36 +1,72 @@
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Pressable } from "react-native";
 import { MessageCircle, Repeat2, Heart } from "lucide-react-native";
+import { Feather } from "@expo/vector-icons";
 
 import { Text, View } from "./Themed";
 import { TweetType } from "../types/index";
+import { Link } from "expo-router";
 
 type TweetProps = {
   tweet: TweetType;
 };
 
+function liked() {
+  return null;
+}
+
 export default function Tweet({ tweet }: TweetProps) {
   return (
-    <View style={styles.container}>
-      <View style={styles.profileImageContainer}>
-        <Image source={{ uri: tweet.user.image }} style={styles.profileImage} />
-      </View>
+    <Link href={`/tweet/${tweet.id}`} asChild>
+      <Pressable style={styles.container}>
+        <View style={styles.profileImageContainer}>
+          <Image
+            source={{ uri: tweet.user.image }}
+            style={styles.profileImage}
+          />
+        </View>
 
-      <View style={styles.tweetContainer}>
-        <View style={styles.userInfoContainer}>
-          <Text>{tweet.user.name}</Text>
-          <Text style={styles.username}>@{tweet.user.username}</Text>
+        <View style={styles.tweetContainer}>
+          <View style={styles.userInfoContainer}>
+            <Text style={{ fontWeight: "bold" }}>{tweet.user.name}</Text>
+            <Text style={styles.username}>@{tweet.user.username}</Text>
+            <Feather
+              name="more-horizontal"
+              size={15}
+              color="white"
+              style={{
+                marginLeft: "auto",
+                marginRight: 5,
+                paddingTop: 2,
+                paddingRight: 5,
+              }}
+            />
+          </View>
+          <Text style={styles.tweetText}>{tweet.content}</Text>
+          {tweet.image && (
+            <Image source={{ uri: tweet.image }} style={styles.tweetImage} />
+          )}
+          <View style={styles.tweetInteractionContainer}>
+            <View style={styles.tweetInteraction}>
+              <MessageCircle color="white" size={17} />
+              <Text>{tweet.numberOfComments && tweet.numberOfComments}</Text>
+            </View>
+            <View style={styles.tweetInteraction}>
+              <Feather
+                name="message-circle"
+                size={15}
+                color={"white"}
+                // onPress={liked}
+              />
+              <Text>{tweet.numberOfRetweets && tweet.numberOfRetweets}</Text>
+            </View>
+            <View style={styles.tweetInteraction}>
+              <Feather name="heart" size={15} color={"white"} onPress={liked} />
+              <Text>{tweet.numberOfLikes && tweet.numberOfLikes}</Text>
+            </View>
+          </View>
         </View>
-        <Text style={styles.tweetText}>{tweet.content}</Text>
-        {tweet.image ? (
-          <Image source={{ uri: tweet.image }} style={styles.tweetImage} />
-        ) : null}
-        <View style={styles.tweetInteractions}>
-          <MessageCircle color="white" size={20} />
-          <Repeat2 color="white" size={20} />
-          <Heart color="white" size={20} />
-        </View>
-      </View>
-    </View>
+      </Pressable>
+    </Link>
   );
 }
 
@@ -38,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
   profileImage: {
     width: 50,
@@ -60,10 +96,12 @@ const styles = StyleSheet.create({
     color: "grey",
     marginLeft: 5,
   },
-  tweetInteractions: {
+  tweetInteractionContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "flex-end",
+    paddingRight: 10,
   },
   tweetText: {
     marginVertical: 10,
@@ -72,5 +110,12 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 16 / 9,
     borderRadius: 20,
+    marginBottom: 10,
+  },
+  tweetInteraction: {
+    display: "flex",
+    flexDirection: "row",
+    width: "16%",
+    justifyContent: "space-between",
   },
 });
